@@ -1,0 +1,79 @@
+Cihaz: mps
+
+===== Deney1 - Temel MLP (2 gizli katman, Adam) =====
+{'gizli_katmanlar': (256, 128), 'optimizer': 'adam', 'lr': 0.001, 'batch_size': 64, 'epoch': 10}
+Epoch  1 | train loss 0.2492 acc 0.9247 | val loss 0.1337 acc 0.9597
+Epoch  2 | train loss 0.1020 acc 0.9689 | val loss 0.1123 acc 0.9666
+Epoch  3 | train loss 0.0695 acc 0.9781 | val loss 0.0992 acc 0.9684
+Epoch  4 | train loss 0.0527 acc 0.9826 | val loss 0.1171 acc 0.9659
+Epoch  5 | train loss 0.0438 acc 0.9858 | val loss 0.0914 acc 0.9741
+Epoch  6 | train loss 0.0334 acc 0.9895 | val loss 0.0915 acc 0.9767
+Epoch  7 | train loss 0.0265 acc 0.9909 | val loss 0.1078 acc 0.9739
+Epoch  8 | train loss 0.0262 acc 0.9908 | val loss 0.0989 acc 0.9761
+Epoch  9 | train loss 0.0207 acc 0.9931 | val loss 0.1146 acc 0.9729
+Epoch 10 | train loss 0.0205 acc 0.9930 | val loss 0.1034 acc 0.9765
+Test accuracy: 0.9762 | Eğitim süresi: 63.1 sn
+
+===== Deney2 - Daha derin ve geniş (3 gizli katman) =====
+{'gizli_katmanlar': (512, 256, 128), 'optimizer': 'adam', 'lr': 0.001, 'batch_size': 64, 'epoch': 10}
+Epoch  1 | train loss 0.2385 acc 0.9273 | val loss 0.1347 acc 0.9611
+Epoch  2 | train loss 0.0981 acc 0.9704 | val loss 0.1065 acc 0.9697
+Epoch  3 | train loss 0.0703 acc 0.9786 | val loss 0.1333 acc 0.9622
+Epoch  4 | train loss 0.0560 acc 0.9826 | val loss 0.0943 acc 0.9727
+Epoch  5 | train loss 0.0446 acc 0.9860 | val loss 0.0902 acc 0.9773
+Epoch  6 | train loss 0.0369 acc 0.9881 | val loss 0.1065 acc 0.9694
+Epoch  7 | train loss 0.0346 acc 0.9894 | val loss 0.1259 acc 0.9700
+Epoch  8 | train loss 0.0295 acc 0.9903 | val loss 0.1120 acc 0.9761
+Epoch  9 | train loss 0.0238 acc 0.9925 | val loss 0.1393 acc 0.9697
+Epoch 10 | train loss 0.0248 acc 0.9922 | val loss 0.1091 acc 0.9770
+Test accuracy: 0.9780 | Eğitim süresi: 73.6 sn
+
+===== Deney3 - SGD (momentum 0.9) =====
+{'gizli_katmanlar': (256, 128), 'optimizer': 'sgd', 'lr': 0.01, 'batch_size': 64, 'epoch': 10}
+Epoch  1 | train loss 0.3444 acc 0.8985 | val loss 0.1647 acc 0.9490
+Epoch  2 | train loss 0.1186 acc 0.9644 | val loss 0.1208 acc 0.9626
+Epoch  3 | train loss 0.0751 acc 0.9776 | val loss 0.0957 acc 0.9713
+Epoch  4 | train loss 0.0546 acc 0.9825 | val loss 0.0995 acc 0.9688
+Epoch  5 | train loss 0.0395 acc 0.9875 | val loss 0.0890 acc 0.9740
+Epoch  6 | train loss 0.0290 acc 0.9911 | val loss 0.0880 acc 0.9749
+Epoch  7 | train loss 0.0205 acc 0.9942 | val loss 0.0938 acc 0.9742
+Epoch  8 | train loss 0.0141 acc 0.9967 | val loss 0.0887 acc 0.9753
+Epoch  9 | train loss 0.0105 acc 0.9972 | val loss 0.0889 acc 0.9751
+Epoch 10 | train loss 0.0066 acc 0.9987 | val loss 0.0839 acc 0.9784
+Test accuracy: 0.9800 | Eğitim süresi: 55.2 sn
+
+===== Deney4 - Dropout 0.2 =====
+{'gizli_katmanlar': (256, 128), 'optimizer': 'adam', 'lr': 0.001, 'batch_size': 64, 'epoch': 10, 'dropout': 0.2}
+Epoch  1 | train loss 0.3000 acc 0.9085 | val loss 0.1440 acc 0.9549
+Epoch  2 | train loss 0.1395 acc 0.9563 | val loss 0.1086 acc 0.9678
+Epoch  3 | train loss 0.1032 acc 0.9681 | val loss 0.0981 acc 0.9710
+Epoch  4 | train loss 0.0868 acc 0.9723 | val loss 0.0879 acc 0.9726
+Epoch  5 | train loss 0.0729 acc 0.9769 | val loss 0.0896 acc 0.9749
+Epoch  6 | train loss 0.0638 acc 0.9795 | val loss 0.0897 acc 0.9745
+Epoch  7 | train loss 0.0597 acc 0.9810 | val loss 0.0909 acc 0.9736
+Epoch  8 | train loss 0.0567 acc 0.9815 | val loss 0.0914 acc 0.9750
+Epoch  9 | train loss 0.0501 acc 0.9843 | val loss 0.0944 acc 0.9745
+Epoch 10 | train loss 0.0470 acc 0.9849 | val loss 0.0838 acc 0.9766
+Test accuracy: 0.9800 | Eğitim süresi: 63.4 sn
+
+===== Deney5 - Yüksek öğrenme oranı (lr=0.01) =====
+{'gizli_katmanlar': (256, 128), 'optimizer': 'adam', 'lr': 0.01, 'batch_size': 64, 'epoch': 10}
+Epoch  1 | train loss 0.3074 acc 0.9105 | val loss 0.2701 acc 0.9243
+Epoch  2 | train loss 0.2107 acc 0.9422 | val loss 0.2344 acc 0.9371
+Epoch  3 | train loss 0.1810 acc 0.9519 | val loss 0.2421 acc 0.9416
+Epoch  4 | train loss 0.1662 acc 0.9561 | val loss 0.2467 acc 0.9478
+Epoch  5 | train loss 0.1672 acc 0.9574 | val loss 0.2078 acc 0.9542
+Epoch  6 | train loss 0.1515 acc 0.9622 | val loss 0.2147 acc 0.9504
+Epoch  7 | train loss 0.1451 acc 0.9638 | val loss 0.1922 acc 0.9546
+Epoch  8 | train loss 0.1291 acc 0.9674 | val loss 0.1919 acc 0.9595
+Epoch  9 | train loss 0.1187 acc 0.9702 | val loss 0.2396 acc 0.9522
+Epoch 10 | train loss 0.1254 acc 0.9689 | val loss 0.2407 acc 0.9553
+Test accuracy: 0.9604 | Eğitim süresi: 62.7 sn
+
+===== ÖZET TABLO =====
+Deney                                               TrainAcc   ValAcc  TestAcc  Süre(sn)
+Deney1 - Temel MLP (2 gizli katman, Adam)             0.9930   0.9765   0.9762      63.1
+Deney2 - Daha derin ve geniş (3 gizli katman)         0.9922   0.9770   0.9780      73.6
+Deney3 - SGD (momentum 0.9)                           0.9987   0.9784   0.9800      55.2
+Deney4 - Dropout 0.2                                  0.9849   0.9766   0.9800      63.4
+Deney5 - Yüksek öğrenme oranı (lr=0.01)               0.9689   0.9553   0.9604      62.7
