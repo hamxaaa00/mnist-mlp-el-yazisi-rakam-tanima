@@ -95,7 +95,11 @@ Train/val loss ve accuracy değerleri 10. epoch sonundaki değerler. Test accura
 
 ## Kendi el yazımla test
 
-Öğrenci numaramı (23120205059) beyaz kağıda koyu kalemle, rakamlar arasında boşluk bırakarak yazdım ve telefonla fotoğrafladım. Fotoğraf MNIST'e benzetmek için şu adımlardan geçti:
+Öğrenci numaramı (23120205059) beyaz kağıda mavi tükenmez kalemle, rakamlar arasında boşluk bırakarak yazdım ve telefonla fotoğrafladım (`el_yazisi/ham/numara_orijinal.jpg`). Fotoğrafta kağıt yan duruyordu ve kenarlarda kumaş görünüyordu. Bu yüzden önce sadece numaranın yazılı olduğu şeridi kırpıp 90 derece çevirdim (`el_yazisi/ham/numara.jpg`):
+
+![Kırpılmış fotoğraf](el_yazisi/ham/numara.jpg)
+
+Bu görüntü MNIST'e benzetmek için şu adımlardan geçti:
 
 1. Gri tonlamaya çevirme
 2. Renkleri ters çevirme (MNIST'te arka plan siyah, rakam beyaz)
@@ -108,16 +112,15 @@ Train/val loss ve accuracy değerleri 10. epoch sonundaki değerler. Test accura
 
 Testte validation accuracy'si en yüksek model (Deney 3, SGD) kullanıldı.
 
-Orijinal fotoğraf: `el_yazisi/ham/`
-İşlenmiş 28x28 görüntüler: `el_yazisi/islenmis/`
+İşlenmiş 28x28 görüntüler `el_yazisi/islenmis/` klasöründe. Grafikte her rakamın üstünde modelin tahmini ve tahminden ne kadar emin olduğu (softmax olasılığı) yazıyor.
 
 ![El yazısı tahminleri](sonuclar/el_yazisi_tahminler.png)
 
 | | |
 |---|---|
 | Gerçek | 23120205059 |
-| Tahmin | |
-| Doğru rakam | /11 |
+| Tahmin | 2312020505**3** |
+| Doğru rakam | 10/11 (%90.9) |
 
 ## Değerlendirme
 
@@ -131,6 +134,8 @@ Orijinal fotoğraf: `el_yazisi/ham/`
 
 **Yüksek öğrenme oranı (Deney 5):** Adam ile öğrenme oranını 10 kat artırınca (0.001'den 0.01'e) en kötü sonuç çıktı: test %96.04. Hem train hem validation loss diğer deneylerden yüksek kaldı ve validation loss 0.19 ile 0.27 arasında zıplayıp durdu. Adımlar çok büyük olduğu için optimizer minimum noktasının etrafında salınıyor ve iyi bir noktaya oturamıyor.
 
-**El yazısı ile test:** _(Sonuç çıkınca yazılacak.)_ Beklenen, el yazısındaki başarının MNIST test başarısından (%98) daha düşük olması. Bunun nedeni distribution shift, yani eğitim verisi ile gerçek veri arasındaki dağılım farkı: kalem kalınlığı, yazı stili, kağıt ve ışık farkı, kırpma ve ortalama farkları. Ayrıca MLP görüntüyü 784 bağımsız sayıdan oluşan düz bir vektör olarak görüyor. Rakam birkaç piksel kayınca veya biraz farklı kalınlıkta yazılınca girdi vektörü tamamen değişiyor. CNN ise komşu pikseller arasındaki yerel desenleri öğrendiği ve kaymaya karşı daha dayanıklı olduğu için bu konuda daha başarılı olurdu.
+**El yazısı ile test:** Kendi yazdığım 11 rakamın 10'u doğru tanındı (%90.9). Bu oran MNIST test setindeki %98'den belirgin şekilde düşük. 2, 3, 1, 0 ve 5 rakamlarının hepsi doğru bulundu ve çoğunda model %100'e yakın emindi. İkinci "2" doğru tahmin edildi ama güven %83'e düştü. Hata son rakamda oldu: "9"u %70 olasılıkla "3" olarak tahmin etti. İşlenmiş görüntüye bakınca benim 9'umun üst halkasının küçük ve sağa doğru açık olduğu, alt kuyruğunun da uzun ve kıvrık olduğu görülüyor. Bu şekil MNIST'teki tipik dik çizgili 9'lardan çok 3'ün alt yarısına benziyor.
 
-**Genel sonuç:** MNIST üzerinde MLP ile %98 civarında başarıya ulaşmak mümkün. Hiperparametreler arasında en büyük etkiyi öğrenme oranı yaptı: yanlış bir değer, mimariyi değiştirmekten daha fazla zarar verdi. Overfitting'e karşı en etkili yöntemler dropout ve validation'a göre en iyi epoch'u seçmek oldu.
+Bu fark distribution shift'in, yani eğitim verisi ile gerçek veri arasındaki dağılım farkının bir örneği. MNIST'teki rakamlar kalın kalemle yazılıp taranmış; benim rakamlarım ince tükenmez kalemle yazılıp telefonla çekildi. Çizgi kalınlığı, yazı stili, ışık ve kırpma farkları modelin hiç görmediği türden girdiler oluşturuyor. Ayrıca MLP görüntüyü 784 bağımsız sayıdan oluşan düz bir vektör olarak görüyor. Rakam birkaç piksel kayınca veya biraz farklı kalınlıkta yazılınca girdi vektörü tamamen değişiyor. CNN ise komşu pikseller arasındaki yerel desenleri (halka, çizgi, köşe) öğrendiği ve kaymaya karşı daha dayanıklı olduğu için bu konuda daha başarılı olurdu. MLP ile sonucu iyileştirmek için şunlar denenebilir: çizgileri MNIST'teki kadar kalınlaştırmak (morfolojik genişletme), eğitimde döndürme, kaydırma ve kalınlık değişimi gibi veri artırma (data augmentation) uygulamak ya da modeli birkaç farklı kişinin el yazısıyla ince ayar yapmak.
+
+**Genel sonuç:** MNIST üzerinde MLP ile %98 civarında başarıya ulaşmak mümkün. Hiperparametreler arasında en büyük etkiyi öğrenme oranı yaptı: yanlış bir değer, mimariyi değiştirmekten daha fazla zarar verdi. Overfitting'e karşı en etkili yöntemler dropout ve validation'a göre en iyi epoch'u seçmek oldu. Kendi el yazımdaki %90.9'luk başarı ise test setindeki yüksek başarının gerçek hayata birebir taşınmadığını, eğitim verisine benzemeyen girdilerde modelin zorlandığını gösterdi.
